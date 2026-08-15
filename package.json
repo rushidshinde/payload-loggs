@@ -1,5 +1,5 @@
 {
-  "name": "payload-loggs",
+  "name": "@brandlift/payload-loggs",
   "type": "module",
   "version": "1.0.0",
   "description": "Zero-config activity feed, audit logging, and security tracking plugin for Payload CMS",
@@ -72,7 +72,7 @@
     "manual-publish": "npm publish --access public",
     "check-types": "npx tsc --noEmit --pretty",
     "prepublishOnly": "npm run clean && npm run build",
-    "test:plugin": "npm run clean && npm run build && npm run link && npm run --dir ./dev link payload-loggs && npm run dev",
+    "test:plugin": "npm run clean && npm run build && npm run link && npm run --dir ./dev link @brandlift/payload-loggs && npm run dev",
     "test:watch": "vitest",
     "test:unit": "vitest run",
     "commit": "cz",
@@ -129,6 +129,7 @@
     "vitest": "^4.1.10"
   },
   "publishConfig": {
+    "access": "public",
     "exports": {
       ".": {
         "import": "./dist/index.js",

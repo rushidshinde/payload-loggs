@@ -8,7 +8,7 @@
       "@payload-config": [
         "./payload.config.ts"
       ],
-      "payload-loggs/*": [
+      "@brandlift/payload-loggs/*": [
         "../dist/*"
       ]
     },

@@ -1,4 +1,4 @@
-# 📦 Payload Loggs (`payload-loggs`)
+# 📦 Payload Loggs (`@brandlift/payload-loggs`)
 
 **Payload Loggs** is a fast, zero-config plugin for [Payload CMS](https://payloadcms.com) that provides **high-level site activity feeds, security auditing, and event tracking**.
 
@@ -23,18 +23,18 @@ Designed for developers and teams, `payload-loggs` automatically records human-r
 Install with your preferred package manager:
 
 ```bash
-pnpm add payload-loggs
+pnpm add @brandlift/payload-loggs
 
 # or
 
-npm install payload-loggs
+npm install @brandlift/payload-loggs
 ```
 
 Then, register the plugin in your `payload.config.ts`:
 
 ```ts
 import { buildConfig } from 'payload'
-import { siteActivity } from 'payload-loggs'
+import { siteActivity } from '@brandlift/payload-loggs'
 
 export default buildConfig({
   // ... your collections & globals ...
@@ -51,7 +51,7 @@ export default buildConfig({
 You can selectively configure tracking if you want to filter specific collections or custom cleanup rules:
 
 ```ts
-import { siteActivity } from 'payload-loggs'
+import { siteActivity } from '@brandlift/payload-loggs'
 
 export default buildConfig({
   plugins: [
