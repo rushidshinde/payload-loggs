@@ -1,3 +1,10 @@
+## [1.0.3](https://github.com/rushidshinde/payload-loggs/compare/v1.0.2...v1.0.3) (2026-08-15)
+
+
+### Bug Fixes
+
+* **pkg:** reorder exports to place types first for TypeScript resolution ([79eb577](https://github.com/rushidshinde/payload-loggs/commit/79eb577bc0db84b72f2d91cbae2000108f924f6e))
+
 ## [1.0.2](https://github.com/rushidshinde/payload-loggs/compare/v1.0.1...v1.0.2) (2026-08-15)
 
 
