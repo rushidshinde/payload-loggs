@@ -1,8 +1,8 @@
 import type { Config } from 'payload';
 
 import type { PluginConfig } from '../../types/config.js';
-import type { GlobalHooksKeys } from '../../types/global.js';
 import { createGlobalAfterChangeHook } from '../../hooks/globalHooks.js';
+import type { GlobalHooksArgsParameterUnion, GlobalHooksKeys } from '../../types/global.js';
 import { logBuilderManager } from '../../core/log-builders/logBuilderManager/logBuilderManager.js';
 
 export const attachGlobalConfig = (
@@ -47,10 +47,11 @@ export const attachGlobalConfig = (
           continue;
         }
 
-        const existingHooks = (updatedGlobal.hooks as any)[typedHookName] || [];
-        (updatedGlobal.hooks as any)[typedHookName] = [
+        const hooksObj = updatedGlobal.hooks as Record<string, unknown[] | undefined>;
+        const existingHooks = hooksObj[typedHookName] || [];
+        hooksObj[typedHookName] = [
           ...existingHooks,
-          async (args: any) => logBuilderManager({
+          async (args: GlobalHooksArgsParameterUnion) => logBuilderManager({
             scopeSlug: 'global',
             hookArgs: args,
             pluginConfig: pluginOpts,

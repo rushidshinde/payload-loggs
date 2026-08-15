@@ -13,7 +13,7 @@ export const siteActivity = (
   return async (payloadConfig: Config): Promise<Config> => {
     const config = { ...payloadConfig };
 
-    const configuredCollection = pluginConfig.configureRootCollection?.(SiteActivityCollection as any) ?? SiteActivityCollection;
+    const configuredCollection = pluginConfig.configureRootCollection?.(SiteActivityCollection) ?? SiteActivityCollection;
 
     const hasSiteActivityCollection = config.collections?.some(
       c => c.slug === configuredCollection.slug || c.slug === 'auditor-logs' || c.slug === 'Audit-log',

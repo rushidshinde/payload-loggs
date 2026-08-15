@@ -25,7 +25,7 @@ export const cleanupLogsTask = (params: CleanupLogsTaskParams): TaskConfig<typeo
       const millisecondsAgo = new Date(Date.now() - olderThan);
       try {
         await req.payload.delete({
-          collection: params.internalCollectionConfig.slug as any,
+          collection: params.internalCollectionConfig.slug as keyof typeof req.payload.collections,
           where: { createdAt: { less_than: millisecondsAgo.toISOString() } },
         });
       }

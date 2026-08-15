@@ -1,9 +1,9 @@
 import type { Config } from 'payload';
 
 import type { PluginConfig } from '../../types/config.js';
-import type { CollectionHooksKeys } from '../../types/collection.js';
 import { SITE_ACTIVITY_SLUG } from '../../collections/SiteActivityCollection.js';
 import { logBuilderManager } from '../../core/log-builders/logBuilderManager/logBuilderManager.js';
+import type { CollectionHooksArgsParameterUnion, CollectionHooksKeys } from '../../types/collection.js';
 import {
   createCollectionAfterChangeHook,
   createCollectionAfterDeleteHook,
@@ -88,10 +88,11 @@ export const attachCollectionConfig = (
           continue;
         }
 
-        const existingHooks = (updatedCollection.hooks as any)[typedHookName] || [];
-        (updatedCollection.hooks as any)[typedHookName] = [
+        const hooksObj = updatedCollection.hooks as Record<string, unknown[] | undefined>;
+        const existingHooks = hooksObj[typedHookName] || [];
+        hooksObj[typedHookName] = [
           ...existingHooks,
-          async (args: any) => logBuilderManager({
+          async (args: CollectionHooksArgsParameterUnion) => logBuilderManager({
             scopeSlug: 'collection',
             hookArgs: args,
             pluginConfig: pluginOpts,

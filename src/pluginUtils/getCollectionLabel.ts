@@ -5,7 +5,7 @@ import type { CollectionConfig, GlobalConfig } from 'payload';
  * Defaults to capitalizing the slug if labels are omitted.
  */
 export const getCollectionLabel = (
-  entity: CollectionConfig | GlobalConfig | { slug: string; labels?: any; label?: any },
+  entity: CollectionConfig | GlobalConfig | { slug: string; labels?: Record<string, unknown> | string; label?: Record<string, unknown> | string },
 ): string => {
   if (!entity) {
     return 'Resource';

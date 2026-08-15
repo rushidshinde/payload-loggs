@@ -5,7 +5,6 @@ import type {
 import type { GlobalsTrackConfig } from './global.js';
 import type { BufferConfig } from '../core/buffer/types.js';
 import type { CollectionsTrackConfig } from './collection.js';
-import type { siteActivity } from '../collections/siteActivity.js';
 
 export interface AutomationConfig {
   logCleanup?: {
@@ -60,7 +59,7 @@ export interface PluginConfig {
   /**
    * @see {@link https://github.com/rushidshinde/payload-loggs#configurerootcollection}
    */
-  configureRootCollection?: (defaults: typeof siteActivity) => CollectionConfig;
+  configureRootCollection?: (defaults: CollectionConfig) => CollectionConfig;
 
   /**
    * @see {@link https://github.com/rushidshinde/payload-loggs#collectionsglobals}

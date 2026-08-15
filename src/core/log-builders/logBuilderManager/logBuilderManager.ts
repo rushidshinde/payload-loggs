@@ -17,7 +17,7 @@ export type LogBuilderManager = {
 };
 
 export const logBuilderManager = async (params: LogBuilderManager) => {
-  const operation = extractOperation(params) as any;
+  const operation = extractOperation(params);
 
   // @ts-expect-error
   const hookOperationLevelConfig = params
