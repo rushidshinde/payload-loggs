@@ -52,7 +52,7 @@
     "build": "npm run copyfiles && npm run build:types && npm run build:swc",
     "build:types": "tsc --outDir dist --rootDir ./src",
     "build:only": "npm run copyfiles && npm run build:types && npm run build:swc",
-    "clean": "rimraf {dist,*.tsbuildinfo} --glob",
+    "clean": "rimraf {dist,*.tsbuildinfo,.cache/tsbuildinfo} --glob",
     "copyfiles": "copyfiles -u 1 \"src/**/*.{html,css,scss,ttf,woff,woff2,eot,svg,jpg,png,json}\" dist/",
     "eslint": "eslint .",
     "lint": "npm run eslint:base",
@@ -77,7 +77,7 @@
   },
   "devDependencies": {
     "@antfu/eslint-config": "^9.1.0",
-    "@brandlift/payload-loggs": "^1.0.1",
+    "@brandlift/payload-loggs": "^1.0.3",
     "@commitlint/cli": "^21.2.1",
     "@commitlint/config-conventional": "^21.2.0",
     "@eslint-react/eslint-plugin": "^5.17.1",
