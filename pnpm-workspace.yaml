@@ -1,0 +1,9 @@
+shellEmulator: true
+
+packages:
+  - .
+  - dev
+allowBuilds:
+  '@swc/core': true
+  esbuild: true
+  sharp: true

@@ -1,0 +1,191 @@
+import type { TaskConfig } from 'payload';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
+
+import type { PluginConfig } from '../../../../types/config.js';
+import { SiteActivityCollection } from '../../../../collections/SiteActivityCollection.js';
+import { CLEANUP_TASK_LABEL, CLEANUP_TASK_SLUG, cleanupLogsTask, DEFAULT_CRON_TIME, DEFAULT_OLDER_THAN, DEFAULT_QUEUE_NAME } from './cleanup.js';
+
+const mockPluginConfig = {
+  automation: {
+    logCleanup: {
+      cronTime: DEFAULT_CRON_TIME,
+      olderThan: DEFAULT_OLDER_THAN,
+      queueName: DEFAULT_QUEUE_NAME,
+    },
+  },
+} as const satisfies PluginConfig;
+
+const mockReq = {
+  payload: {
+    delete: vi.fn(),
+    logger: {
+      error: vi.fn(),
+      info: vi.fn(),
+    },
+  },
+};
+
+describe('cleanupLogsTask', () => {
+  beforeEach(() => {
+    vi.clearAllMocks();
+  });
+
+  it('should return expected task with 30-day retention and 00:01 AM cron defaults', () => {
+    expect(DEFAULT_CRON_TIME).toBe('1 0 * * *');
+    expect(DEFAULT_OLDER_THAN).toBe(2592000000);
+
+    const result = cleanupLogsTask({ internalCollectionConfig: SiteActivityCollection, pluginConfig: mockPluginConfig });
+
+    const expectedResultInstance = {
+      handler: expect.any(Function),
+      slug: expect.any(String),
+      label: expect.any(String),
+      schedule: expect.any(Array),
+    } as TaskConfig<'cleanup-site-activity-log'>;
+
+    const expectedResult = {
+      handler: expect.any(Function),
+      slug: CLEANUP_TASK_SLUG,
+      label: CLEANUP_TASK_LABEL,
+      schedule: [{ cron: DEFAULT_CRON_TIME, queue: DEFAULT_QUEUE_NAME }],
+    } as TaskConfig<'cleanup-site-activity-log'>;
+
+    expect(result).toEqual(expectedResultInstance);
+    expect(result).toEqual(expectedResult);
+  });
+
+  describe('handler task', () => {
+    it('should call payload.delete with correct parameters', async () => {
+      const task = cleanupLogsTask({ internalCollectionConfig: SiteActivityCollection, pluginConfig: mockPluginConfig });
+
+      typeof task.handler === 'function' && await task
+        .handler({
+          // @ts-expect-error
+          req: mockReq,
+        });
+
+      expect(mockReq.payload.delete)
+        .toHaveBeenCalledWith({
+          collection: SiteActivityCollection.slug,
+          where: expect.objectContaining({
+            createdAt: {
+              less_than: expect.any(String),
+            },
+          }),
+        });
+    });
+
+    it('should use configureRootCollection result when provided', async () => {
+      const pluginConfig: PluginConfig = {
+        configureRootCollection: vi.fn().mockReturnValue({ slug: SiteActivityCollection.slug }),
+        collections: {
+          track: [],
+        },
+      };
+
+      const task = cleanupLogsTask({ internalCollectionConfig: SiteActivityCollection, pluginConfig });
+
+      typeof task.handler === 'function' && await task
+        .handler({
+          // @ts-expect-error
+          req: mockReq,
+        });
+
+      expect(mockReq.payload.delete).toHaveBeenCalledWith({
+        collection: SiteActivityCollection.slug,
+        where: expect.any(Object),
+      });
+    });
+
+    it('should use custom olderThan value', async () => {
+      const customOlderThan = 86400000; // 1 day
+      const pluginConfig: PluginConfig = {
+        automation: {
+          logCleanup: {
+            olderThan: customOlderThan,
+          },
+        },
+      };
+
+      const task = cleanupLogsTask({ internalCollectionConfig: SiteActivityCollection, pluginConfig });
+      typeof task.handler === 'function' && await task.handler({
+        // @ts-expect-error
+        req: mockReq,
+      });
+
+      expect(mockReq.payload.delete).toHaveBeenCalledWith({
+        collection: SiteActivityCollection.slug,
+        where: {
+          createdAt: {
+            less_than: expect.any(String),
+          },
+        },
+      });
+
+      const callArgs = mockReq.payload.delete.mock.calls[0][0];
+      const lessThanValue = callArgs.where.createdAt.less_than;
+      expect(lessThanValue).toEqual(expect.any(String));
+    });
+
+    it('should return empty output object', async () => {
+      const pluginConfig: Partial<PluginConfig> = {};
+      const task = cleanupLogsTask({ internalCollectionConfig: SiteActivityCollection, pluginConfig });
+
+      const result = typeof task.handler === 'function' && await task.handler({
+        // @ts-expect-error
+        req: mockReq,
+      });
+
+      expect(result).toEqual({ output: {} });
+    });
+
+    it('should log error when payload.delete fails', async () => {
+      const mockError = new Error('Database connection failed');
+      mockReq.payload.delete.mockRejectedValueOnce(mockError);
+
+      const pluginConfig: Partial<PluginConfig> = {};
+      const task = cleanupLogsTask({ internalCollectionConfig: SiteActivityCollection, pluginConfig });
+
+      typeof task.handler === 'function' && await task.handler({
+        // @ts-expect-error
+        req: mockReq,
+      });
+
+      expect(mockReq.payload.logger.error).toHaveBeenCalledWith(
+        `Error while cleaning old logs — task: ${CLEANUP_TASK_SLUG}`,
+      );
+      expect(mockReq.payload.delete).toHaveBeenCalled();
+    });
+
+    it('should not throw error when payload.delete fails', async () => {
+      mockReq.payload.delete.mockRejectedValueOnce(new Error('Database error'));
+
+      const pluginConfig: Partial<PluginConfig> = {};
+      const task = cleanupLogsTask({ internalCollectionConfig: SiteActivityCollection, pluginConfig });
+
+      await expect(
+        typeof task.handler === 'function' && task.handler({
+          // @ts-expect-error
+          req: mockReq,
+        }),
+      ).resolves.not.toThrow();
+    });
+
+    it('should log error with correct message', async () => {
+      mockReq.payload.delete.mockRejectedValueOnce(new Error('Any error'));
+
+      const pluginConfig: Partial<PluginConfig> = {};
+
+      const task = cleanupLogsTask({ internalCollectionConfig: SiteActivityCollection, pluginConfig });
+
+      typeof task.handler === 'function' && await task.handler({
+        // @ts-expect-error
+        req: mockReq,
+      });
+
+      expect(mockReq.payload.logger.error).toHaveBeenCalledWith(
+        `Error while cleaning old logs — task: ${CLEANUP_TASK_SLUG}`,
+      );
+    });
+  });
+});
