@@ -1,3 +1,10 @@
+# [1.1.0](https://github.com/rushidshinde/payload-loggs/compare/v1.0.5...v1.1.0) (2026-08-15)
+
+
+### Features
+
+* set minimumReleaseAge to 0 in pnpm workspace and publishConfig ([22a2a99](https://github.com/rushidshinde/payload-loggs/commit/22a2a999a3ba51a290e550e1447ce0d922351af1))
+
 ## [1.0.5](https://github.com/rushidshinde/payload-loggs/compare/v1.0.4...v1.0.5) (2026-08-15)
 
 ## [1.0.4](https://github.com/rushidshinde/payload-loggs/compare/v1.0.3...v1.0.4) (2026-08-15)
