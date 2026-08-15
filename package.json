@@ -34,16 +34,6 @@
       "types": "./dist/index.d.ts",
       "import": "./dist/index.js",
       "default": "./dist/index.js"
-    },
-    "./client": {
-      "types": "./dist/exports/client.d.ts",
-      "import": "./dist/exports/client.js",
-      "default": "./dist/exports/client.js"
-    },
-    "./rsc": {
-      "types": "./dist/exports/rsc.d.ts",
-      "import": "./dist/exports/rsc.js",
-      "default": "./dist/exports/rsc.js"
     }
   },
   "main": "./dist/index.js",
@@ -134,19 +124,9 @@
     "access": "public",
     "exports": {
       ".": {
-        "import": "./dist/index.js",
         "types": "./dist/index.d.ts",
+        "import": "./dist/index.js",
         "default": "./dist/index.js"
-      },
-      "./client": {
-        "import": "./dist/exports/client.js",
-        "types": "./dist/exports/client.d.ts",
-        "default": "./dist/exports/client.js"
-      },
-      "./rsc": {
-        "import": "./dist/exports/rsc.js",
-        "types": "./dist/exports/rsc.d.ts",
-        "default": "./dist/exports/rsc.js"
       }
     },
     "main": "./dist/index.js",
