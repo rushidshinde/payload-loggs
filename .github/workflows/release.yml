@@ -1,8 +1,13 @@
 name: Release
+run-name: "${{ inputs.commit_message || 'Release' }}"
 
 on:
   workflow_dispatch:
     inputs:
+      commit_message:
+        type: string
+        description: "Commit message (e.g. fix(pkg): ...)"
+        required: false
       dry-run:
         type: boolean
         description: "Dry run (do not publish)"
@@ -22,6 +27,11 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
+
+      - name: Display release target commit
+        run: |
+          echo "Releasing HEAD commit:"
+          git log -1 --format="Hash: %H%nSubject: %s%nAuthor: %an <%ae>%nDate: %cd"
 
       - name: Setup pnpm
         uses: pnpm/action-setup@v4
