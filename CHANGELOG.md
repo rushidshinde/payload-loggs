@@ -1,3 +1,10 @@
+## [1.0.1](https://github.com/rushidshinde/payload-loggs/compare/v1.0.0...v1.0.1) (2026-08-15)
+
+
+### Bug Fixes
+
+* **ci:** add trustPolicy no-downgrade to pnpm-workspace.yaml ([3620389](https://github.com/rushidshinde/payload-loggs/commit/3620389f1581b3b46186b5fe94edcb368c058656))
+
 # 1.0.0 (2026-08-15)
 
 
