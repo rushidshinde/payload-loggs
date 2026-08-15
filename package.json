@@ -122,6 +122,7 @@
   },
   "publishConfig": {
     "access": "public",
+    "minimumReleaseAge": 0,
     "exports": {
       ".": {
         "types": "./dist/index.d.ts",
