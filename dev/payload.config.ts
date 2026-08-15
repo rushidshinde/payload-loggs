@@ -4,13 +4,13 @@ import path from 'node:path';
 import { buildConfig } from 'payload';
 import { fileURLToPath } from 'node:url';
 import type { CollectionConfig } from 'payload';
+import { siteActivity } from '@brandlift/payload-loggs';
 import { postgresAdapter } from '@payloadcms/db-postgres';
 import { lexicalEditor } from '@payloadcms/richtext-lexical';
 
 import { navigation } from './globals/Nav.js';
 import { media } from './collections/Media.js';
 import { users } from './collections/Users.js';
-import { siteActivity } from '../src/index.js';
 import { testEmailAdapter } from './helpers/testEmailAdapter.js';
 
 const filename = fileURLToPath(import.meta.url);

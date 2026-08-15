@@ -1,11 +1,11 @@
-trustPolicy: no-downgrade
-
-shellEmulator: true
-
-packages:
-  - .
-  - dev
 allowBuilds:
   '@swc/core': true
   esbuild: true
   sharp: true
+
+shellEmulator: true
+
+trustPolicy: no-downgrade
+packages:
+  - .
+  - dev

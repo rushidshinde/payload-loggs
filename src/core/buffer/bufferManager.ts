@@ -21,7 +21,7 @@ const flushBuffer = async (params: FlushBufferParams) => {
   await Promise.all(
     logsToInsert.map(log =>
       params.payload.create({
-        collection: params.internalCollectionConfig?.slug,
+        collection: params.internalCollectionConfig?.slug as any,
         data: log,
       }),
     ),

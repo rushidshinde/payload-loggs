@@ -7,5 +7,7 @@
     "payload": "cross-env NODE_OPTIONS=--no-deprecation payload",
     "start": "cross-env NODE_OPTIONS=--no-deprecation next start"
   },
-  "dependencies": {}
+  "dependencies": {
+    "@brandlift/payload-loggs": "workspace:*"
+  }
 }

@@ -9,6 +9,8 @@
 /.idea/*
 !/.idea/runConfigurations
 
+dev/node_modules
+
 # testing
 /coverage
 
