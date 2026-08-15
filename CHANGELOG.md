@@ -1,3 +1,10 @@
+## [1.0.4](https://github.com/rushidshinde/payload-loggs/compare/v1.0.3...v1.0.4) (2026-08-15)
+
+
+### Bug Fixes
+
+* **pkg:** clear tsbuildinfo cache on clean and update devDependencies ([960260b](https://github.com/rushidshinde/payload-loggs/commit/960260b0b2e1f7864831b286784a41261a4edd38))
+
 ## [1.0.3](https://github.com/rushidshinde/payload-loggs/compare/v1.0.2...v1.0.3) (2026-08-15)
 
 
