@@ -1,7 +1,7 @@
 {
   "name": "@brandlift/payload-loggs",
   "type": "module",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "packageManager": "pnpm@10.2.0",
   "description": "Zero-config activity feed, audit logging, and security tracking plugin for Payload CMS",
   "author": {

@@ -1,3 +1,10 @@
+## [1.0.2](https://github.com/rushidshinde/payload-loggs/compare/v1.0.1...v1.0.2) (2026-08-15)
+
+
+### Bug Fixes
+
+* **workspace:** sort pnpm-workspace.yaml keys and add @brandlift/payload-loggs to dev ([e7de658](https://github.com/rushidshinde/payload-loggs/commit/e7de658f2d70be6cd085ed0b3c77c63c1cc3aea3))
+
 ## [1.0.1](https://github.com/rushidshinde/payload-loggs/compare/v1.0.0...v1.0.1) (2026-08-15)
 
 
